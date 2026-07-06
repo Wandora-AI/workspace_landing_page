@@ -1,0 +1,64 @@
+.app-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 11rem;
+  padding: 1.25rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: inherit;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.app-card:hover {
+  border-color: var(--color-border-strong);
+  transform: translateY(-2px);
+  color: inherit;
+}
+
+.app-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.app-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  background: var(--color-brass-muted);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+}
+
+.app-card__arrow {
+  font-size: 0.75rem;
+  color: var(--color-brass);
+}
+
+.app-card__title {
+  margin: 0 0 0.375rem;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.app-card__description {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  flex: 1;
+}
+
+.app-card__link {
+  margin-top: auto;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  color: var(--color-brass);
+}

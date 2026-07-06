@@ -1,0 +1,67 @@
+:root {
+  /* Wandora.ai palette — https://wandora.ai/ */
+  --color-bg: #131110;
+  --color-bg-elevated: #1c1916;
+  --color-bg-card: #24201c;
+  --color-border: #f4efe621;
+  --color-border-strong: #c9a35b38;
+  --color-text: #f4efe6;
+  --color-text-secondary: #f4efe6c7;
+  --color-text-muted: #9c937f;
+  --color-brass: #c9a35b;
+  --color-brass-bright: #d9b56d;
+  --color-accent: #ef3b23;
+  --color-accent-hover: #ff4f38;
+  --color-accent-muted: #ef3b2312;
+  --color-brass-muted: #c9a35b12;
+  --color-jade: #3ba887;
+  --color-danger: #c75b49;
+  --font-sans: -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --radius: 8px;
+  --max-width: 960px;
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-bg);
+  background-image: linear-gradient(
+    180deg,
+    #131110 0%,
+    #1c1916 50%,
+    #131110 100%
+  );
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-brass);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-brass-bright);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}

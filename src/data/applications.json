@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "name": "Almosafer — Production Storefront",
+    "description": "[Prod] Customer-facing travel booking — flights, hotels, and packages. Product and QA teams use this to verify live orders and storefront behavior.",
+    "url": "https://almosafer.com",
+    "category": "Almosafer",
+    "icon": "globe"
+  },
+  {
+    "id": "2",
+    "name": "Itinerary Builder — Custom Trips",
+    "description": "[Prod] Build and edit customer trip plans. Product and ops teams use this for bespoke itineraries and booking follow-ups.",
+    "url": "https://itinerary.almosafer.com",
+    "category": "Almosafer",
+    "icon": "map"
+  },
+  {
+    "id": "3",
+    "name": "HK Souq — Customer Storefront",
+    "description": "[Prod] Public marketplace for Hong Kong shoppers — browse, buy, and track orders. Share with customers, not internal staff workflows.",
+    "url": "https://hksouq.com",
+    "category": "HK Souq",
+    "icon": "bag"
+  },
+  {
+    "id": "4",
+    "name": "HK Souq — Vendor Portal",
+    "description": "[Prod] Seller hub for marketplace vendors — manage listings, inventory, and order fulfillment. Partner-facing; not for internal ops.",
+    "url": "https://vendor.hksouq.com",
+    "category": "HK Souq",
+    "icon": "store"
+  },
+  {
+    "id": "5",
+    "name": "Ops Dashboard — Live KPIs",
+    "description": "[Internal] Monitor bookings, refunds, and daily fulfillment metrics. Ops and leadership — VPN required.",
+    "url": "https://ops.internal.example.com",
+    "category": "Operations",
+    "icon": "chart"
+  },
+  {
+    "id": "6",
+    "name": "Support Console — Ticket Queue",
+    "description": "[Internal] Log and resolve customer tickets across Almosafer and HK Souq. CS agents — VPN required.",
+    "url": "https://support.internal.example.com",
+    "category": "Operations",
+    "icon": "headset"
+  }
+]
