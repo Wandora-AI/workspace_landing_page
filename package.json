@@ -10,7 +10,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=wandora-workspace",
-    "deploy:preview": "npm run build && wrangler pages deploy dist --project-name=wandora-workspace --branch=preview"
+    "deploy:uat": "npm run build && wrangler pages deploy dist --project-name=wandora-workspace --branch=uat"
   },
   "dependencies": {
     "react": "^18.3.1",
