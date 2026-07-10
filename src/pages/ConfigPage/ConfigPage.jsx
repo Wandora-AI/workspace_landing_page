@@ -17,40 +17,61 @@ export default function ConfigPage() {
   } = useCategories(applications);
   const [showForm, setShowForm] = useState(false);
   const [editingApp, setEditingApp] = useState(null);
+  const [saveError, setSaveError] = useState("");
+  const [saving, setSaving] = useState(false);
 
   function handleAddClick() {
     setEditingApp(null);
+    setSaveError("");
     setShowForm(true);
   }
 
   function handleEdit(app) {
     setEditingApp(app);
+    setSaveError("");
     setShowForm(true);
   }
 
   function handleCancel() {
     setShowForm(false);
     setEditingApp(null);
+    setSaveError("");
+    setSaving(false);
   }
 
   async function handleSubmit(formData) {
-    if (editingApp) {
-      await update(editingApp.id, formData);
-    } else {
-      await add(formData);
+    setSaving(true);
+    setSaveError("");
+    try {
+      if (editingApp) {
+        await update(editingApp.id, formData);
+      } else {
+        await add(formData);
+      }
+      handleCancel();
+    } catch (err) {
+      setSaveError(err.message || "Failed to save application");
+    } finally {
+      setSaving(false);
     }
-    handleCancel();
   }
 
   async function handleDelete(app) {
     const confirmed = window.confirm(
       `Delete "${app.name}"? This cannot be undone.`
     );
-    if (confirmed) {
+    if (!confirmed) {
+      return;
+    }
+
+    setSaveError("");
+    try {
       await remove(app.id);
       if (editingApp?.id === app.id) {
         handleCancel();
       }
+    } catch (err) {
+      setSaveError(err.message || "Failed to delete application");
     }
   }
 
@@ -88,6 +109,10 @@ export default function ConfigPage() {
 
       <AddCategoryBar categories={categories} onAdd={addCategory} />
 
+      {saveError && (
+        <p className="page-status page-status--error">{saveError}</p>
+      )}
+
       {showForm && (
         <div className="config-page__form-panel">
           <h2 className="config-page__form-title">
@@ -98,6 +123,7 @@ export default function ConfigPage() {
             categories={categories}
             onSubmit={handleSubmit}
             onCancel={handleCancel}
+            submitting={saving}
           />
         </div>
       )}

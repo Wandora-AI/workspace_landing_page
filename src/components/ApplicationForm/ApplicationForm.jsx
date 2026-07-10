@@ -15,6 +15,7 @@ export default function ApplicationForm({
   categories = [],
   onSubmit,
   onCancel,
+  submitting = false,
 }) {
   const [form, setForm] = useState({ ...EMPTY_FORM, ...initialValues });
   const [errors, setErrors] = useState({});
@@ -51,10 +52,10 @@ export default function ApplicationForm({
     return Object.keys(next).length === 0;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (!validate()) return;
-    onSubmit({
+    if (!validate() || submitting) return;
+    await onSubmit({
       name: form.name.trim(),
       description: form.description.trim(),
       url: form.url.trim(),
@@ -129,11 +130,16 @@ export default function ApplicationForm({
       </div>
 
       <div className="app-form__actions">
-        <button type="submit" className="btn btn--primary">
-          Save
+        <button type="submit" className="btn btn--primary" disabled={submitting}>
+          {submitting ? "Saving…" : "Save"}
         </button>
         {onCancel && (
-          <button type="button" className="btn btn--ghost" onClick={onCancel}>
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={onCancel}
+            disabled={submitting}
+          >
             Cancel
           </button>
         )}

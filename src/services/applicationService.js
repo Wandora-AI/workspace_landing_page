@@ -1,62 +1,64 @@
-import seedData from "../data/applications.json";
-
-const STORAGE_KEY = "landing_page_applications";
+import {
+  getWorkspaceData,
+  updateWorkspaceData,
+} from "./workspaceDataService";
 
 /**
  * Application data service.
- * Currently reads/writes via localStorage seeded from applications.json.
- * Replace these functions with API calls when backend is ready.
+ * Reads/writes via the /api/data endpoint backed by Cloudflare KV.
  */
 
-function readFromStorage() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  }
-  return [...seedData];
-}
-
-function writeToStorage(applications) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(applications));
-}
-
 export async function getApplications() {
-  return readFromStorage();
+  const data = await getWorkspaceData();
+  return data.applications;
 }
 
 export async function addApplication(application) {
-  const applications = readFromStorage();
-  const newApp = {
-    ...application,
-    id: crypto.randomUUID(),
-  };
-  applications.push(newApp);
-  writeToStorage(applications);
-  return newApp;
+  let created;
+
+  await updateWorkspaceData((data) => {
+    created = {
+      ...application,
+      id: crypto.randomUUID(),
+    };
+    data.applications.push(created);
+    return data;
+  });
+
+  return created;
 }
 
 export async function updateApplication(id, updates) {
-  const applications = readFromStorage();
-  const index = applications.findIndex((app) => app.id === id);
-  if (index === -1) {
-    throw new Error(`Application with id "${id}" not found`);
-  }
-  applications[index] = { ...applications[index], ...updates, id };
-  writeToStorage(applications);
-  return applications[index];
+  let updated;
+
+  await updateWorkspaceData((data) => {
+    const index = data.applications.findIndex((app) => app.id === id);
+    if (index === -1) {
+      throw new Error(`Application with id "${id}" not found`);
+    }
+
+    data.applications[index] = {
+      ...data.applications[index],
+      ...updates,
+      id,
+    };
+    updated = data.applications[index];
+    return data;
+  });
+
+  return updated;
 }
 
 export async function deleteApplication(id) {
-  const applications = readFromStorage();
-  const filtered = applications.filter((app) => app.id !== id);
-  if (filtered.length === applications.length) {
-    throw new Error(`Application with id "${id}" not found`);
-  }
-  writeToStorage(filtered);
+  await updateWorkspaceData((data) => {
+    const filtered = data.applications.filter((app) => app.id !== id);
+    if (filtered.length === data.applications.length) {
+      throw new Error(`Application with id "${id}" not found`);
+    }
+
+    data.applications = filtered;
+    return data;
+  });
 }
 
 export function groupByCategory(applications) {
@@ -69,8 +71,4 @@ export function groupByCategory(applications) {
     groups[category].push(app);
   }
   return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b));
-}
-
-export function resetToSeed() {
-  localStorage.removeItem(STORAGE_KEY);
 }

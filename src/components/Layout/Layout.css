@@ -14,15 +14,25 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.layout__logo {
-  font-family: var(--font-serif);
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--color-accent);
+.layout__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
 }
 
-.layout__logo:hover {
-  color: var(--color-accent-hover);
+.layout__logo {
+  height: 1.75rem;
+  width: auto;
+  display: block;
+}
+
+.layout__workspace {
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border-left: 1px solid var(--color-border-strong);
+  padding-left: 0.625rem;
 }
 
 .layout__nav {

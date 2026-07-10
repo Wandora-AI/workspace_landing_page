@@ -1,34 +1,20 @@
-import seedCategories from "../data/categories.json";
-
-const STORAGE_KEY = "landing_page_categories";
+import {
+  getWorkspaceData,
+  updateWorkspaceData,
+} from "./workspaceDataService";
 
 /**
  * Category data service.
- * Replace these functions with API calls when backend is ready.
+ * Reads/writes via the /api/data endpoint backed by Cloudflare KV.
  */
-
-function readFromStorage() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  }
-  return [...seedCategories];
-}
-
-function writeToStorage(categories) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(categories));
-}
 
 function normalize(name) {
   return name.trim();
 }
 
 export async function getCategories() {
-  return readFromStorage().sort((a, b) => a.localeCompare(b));
+  const data = await getWorkspaceData();
+  return data.categories.sort((a, b) => a.localeCompare(b));
 }
 
 export async function addCategory(name) {
@@ -37,17 +23,22 @@ export async function addCategory(name) {
     throw new Error("Category name is required");
   }
 
-  const categories = readFromStorage();
-  const exists = categories.some(
-    (item) => item.toLowerCase() === value.toLowerCase()
-  );
-  if (exists) {
-    throw new Error(`Category "${value}" already exists`);
-  }
+  let created;
 
-  categories.push(value);
-  writeToStorage(categories);
-  return value;
+  await updateWorkspaceData((data) => {
+    const exists = data.categories.some(
+      (item) => item.toLowerCase() === value.toLowerCase()
+    );
+    if (exists) {
+      throw new Error(`Category "${value}" already exists`);
+    }
+
+    data.categories.push(value);
+    created = value;
+    return data;
+  });
+
+  return created;
 }
 
 export function mergeCategoriesFromApplications(categories, applications) {
@@ -58,8 +49,4 @@ export function mergeCategoriesFromApplications(categories, applications) {
     }
   }
   return [...merged].sort((a, b) => a.localeCompare(b));
-}
-
-export function resetCategoriesToSeed() {
-  localStorage.removeItem(STORAGE_KEY);
 }

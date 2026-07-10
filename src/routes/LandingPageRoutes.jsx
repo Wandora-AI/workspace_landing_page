@@ -1,5 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import ConfigPasswordGate from "../components/ConfigPasswordGate/ConfigPasswordGate";
+import {
+  AUTH_STORAGE_KEYS,
+  CONFIG_PASSWORD,
+  TEAM_PASSWORD,
+} from "../config/auth";
+import PasswordGate from "../components/PasswordGate/PasswordGate";
 import Layout from "../components/Layout/Layout";
 import LandingPage from "../pages/LandingPage/LandingPage";
 import ConfigPage from "../pages/ConfigPage/ConfigPage";
@@ -11,19 +16,31 @@ import ConfigPage from "../pages/ConfigPage/ConfigPage";
  */
 export default function LandingPageRoutes() {
   return (
-    <Routes>
-      <Route path="/landing_page" element={<Layout />}>
-        <Route index element={<LandingPage />} />
-        <Route
-          path="config"
-          element={
-            <ConfigPasswordGate>
-              <ConfigPage />
-            </ConfigPasswordGate>
-          }
-        />
-      </Route>
-      <Route path="*" element={<Navigate to="/landing_page" replace />} />
-    </Routes>
+    <PasswordGate
+      expectedPassword={TEAM_PASSWORD}
+      storageKey={AUTH_STORAGE_KEYS.workspace}
+    >
+      <Routes>
+        <Route path="/landing_page" element={<Layout />}>
+          <Route index element={<LandingPage />} />
+          <Route
+            path="config"
+            element={
+              <PasswordGate
+                expectedPassword={CONFIG_PASSWORD}
+                storageKey={AUTH_STORAGE_KEYS.config}
+                badge="Admin Access"
+                title="Config Area"
+                subtitle="Enter the config password to manage applications."
+                placeholder="Enter config password"
+              >
+                <ConfigPage />
+              </PasswordGate>
+            }
+          />
+        </Route>
+        <Route path="*" element={<Navigate to="/landing_page" replace />} />
+      </Routes>
+    </PasswordGate>
   );
 }

@@ -1,0 +1,8 @@
+name = "wandora-workspace"
+compatibility_date = "2026-07-10"
+pages_build_output_dir = "dist"
+
+[[kv_namespaces]]
+binding = "WORKSPACE_KV"
+id = "9d18057e24594a3ba193de270488d441"
+preview_id = "7f96329385524334906fc35bdfe6747d"
