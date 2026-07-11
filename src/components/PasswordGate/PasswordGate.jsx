@@ -1,4 +1,5 @@
 import { useState } from "react";
+import wandoraLogo from "../../../assets/wandora-logo-cropped-preview.png";
 import {
   AUTH_STORAGE_KEYS,
   clearConfigAuthPassword,
@@ -70,6 +71,11 @@ export default function PasswordGate({
   return (
     <div className="password-gate">
       <div className="password-gate__panel">
+        <img
+          src={wandoraLogo}
+          alt="Wandora"
+          className="password-gate__logo"
+        />
         <span className="password-gate__badge">{badge}</span>
         <h1 className="password-gate__title">{title}</h1>
         <p className="password-gate__subtitle">{subtitle}</p>

@@ -1,20 +1,35 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import wandoraLogo from "../../../assets/wandora-logo.svg";
+import wandoraLogo from "../../../assets/wandora-logo-cropped-preview.png";
 import "./Layout.css";
 
 export default function Layout() {
   return (
     <div className="layout">
       <header className="layout__header">
-        <Link to="/landing_page" className="layout__brand">
-          <img src={wandoraLogo} alt="Wandora" className="layout__logo" />
-          <span className="layout__workspace">Workspace</span>
-        </Link>
+        <div className="layout__brand">
+          <Link to="/landing_page" className="layout__logo-link">
+            <img src={wandoraLogo} alt="Wandora" className="layout__logo" />
+          </Link>
+          <span className="layout__divider" aria-hidden="true" />
+          <NavLink
+            to="/landing_page"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "layout__nav-link layout__nav-link--workspace layout__nav-link--active"
+                : "layout__nav-link layout__nav-link--workspace"
+            }
+          >
+            Workspace
+          </NavLink>
+        </div>
         <nav className="layout__nav">
           <NavLink
             to="/landing_page/config"
             className={({ isActive }) =>
-              isActive ? "layout__nav-link layout__nav-link--active" : "layout__nav-link"
+              isActive
+                ? "layout__nav-link layout__nav-link--config layout__nav-link--active"
+                : "layout__nav-link layout__nav-link--config"
             }
           >
             Config
