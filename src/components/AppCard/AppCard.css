@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
   min-height: 11rem;
+  min-width: 0;
   padding: 1.25rem;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
@@ -60,5 +61,8 @@
   margin-top: auto;
   font-size: 0.6875rem;
   letter-spacing: 0.06em;
+  line-height: 1.4;
   color: var(--color-brass);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
