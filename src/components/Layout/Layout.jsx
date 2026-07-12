@@ -32,7 +32,7 @@ export default function Layout() {
                 : "layout__nav-link layout__nav-link--config"
             }
           >
-            Config
+            Settings
           </NavLink>
         </nav>
       </header>

@@ -48,7 +48,7 @@
   font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   border-bottom: 3px solid transparent;
   padding-bottom: 0.25rem;
   transition: color 0.15s, border-color 0.15s;
