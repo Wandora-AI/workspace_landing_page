@@ -1,5 +1,5 @@
 import { useState } from "react";
-import wandoraLogo from "../../../assets/wandora-logo-cropped-preview.png";
+import wandoraLogo from "../../../assets/wandora-logo-wide-white.png";
 import {
   AUTH_STORAGE_KEYS,
   clearConfigAuthPassword,
