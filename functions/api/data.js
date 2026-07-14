@@ -1,18 +1,30 @@
 import seedApplications from "../../src/data/applications.json";
 import seedCategories from "../../src/data/categories.json";
+import { normalizeCategories } from "../../src/utils/categoryUtils.js";
 
 const DATA_KEY = "workspace_data";
 
 function seedData() {
   return {
     applications: seedApplications,
-    categories: seedCategories,
+    categories: normalizeCategories(seedCategories),
+  };
+}
+
+function normalizeBody(body) {
+  return {
+    applications: body.applications,
+    categories: normalizeCategories(body.categories),
   };
 }
 
 export async function onRequestGet(context) {
   const stored = await context.env.WORKSPACE_KV.get(DATA_KEY, "json");
-  return Response.json(stored ?? seedData());
+  const data = stored ?? seedData();
+  return Response.json({
+    applications: data.applications,
+    categories: normalizeCategories(data.categories),
+  });
 }
 
 export async function onRequestPut(context) {
@@ -37,6 +49,7 @@ export async function onRequestPut(context) {
     );
   }
 
-  await env.WORKSPACE_KV.put(DATA_KEY, JSON.stringify(body));
-  return Response.json(body);
+  const normalized = normalizeBody(body);
+  await env.WORKSPACE_KV.put(DATA_KEY, JSON.stringify(normalized));
+  return Response.json(normalized);
 }

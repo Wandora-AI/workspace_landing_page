@@ -1,18 +1,28 @@
 import { groupByCategory } from "../../services/applicationService";
 import { useApplications } from "../../hooks/useApplications";
+import { useCategories } from "../../hooks/useCategories";
 import CategorySection from "../../components/CategorySection/CategorySection";
 import "./LandingPage.css";
 
 export default function LandingPage() {
   const { applications, loading, error } = useApplications();
-  const categories = groupByCategory(applications);
+  const {
+    categories,
+    loading: categoriesLoading,
+    error: categoriesError,
+  } = useCategories(applications);
+  const groupedCategories = groupByCategory(applications, categories);
 
-  if (loading) {
+  if (loading || categoriesLoading) {
     return <p className="page-status">Loading applications…</p>;
   }
 
-  if (error) {
-    return <p className="page-status page-status--error">{error}</p>;
+  if (error || categoriesError) {
+    return (
+      <p className="page-status page-status--error">
+        {error || categoriesError}
+      </p>
+    );
   }
 
   return (
@@ -28,10 +38,10 @@ export default function LandingPage() {
         </p>
       </header>
 
-      {categories.length === 0 ? (
+      {groupedCategories.length === 0 ? (
         <p className="page-status">No applications configured yet.</p>
       ) : (
-        categories.map(([category, apps]) => (
+        groupedCategories.map(([category, apps]) => (
           <CategorySection
             key={category}
             category={category}
