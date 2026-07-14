@@ -14,6 +14,8 @@ export default function ConfigPage() {
     loading: categoriesLoading,
     error: categoriesError,
     add: addCategory,
+    updatePriority,
+    remove: removeCategory,
   } = useCategories(applications);
   const [showForm, setShowForm] = useState(false);
   const [editingApp, setEditingApp] = useState(null);
@@ -107,7 +109,12 @@ export default function ConfigPage() {
         )}
       </header>
 
-      <AddCategoryBar categories={categories} onAdd={addCategory} />
+      <AddCategoryBar
+        categories={categories}
+        onAdd={addCategory}
+        onUpdatePriority={updatePriority}
+        onDelete={removeCategory}
+      />
 
       {saveError && (
         <p className="page-status page-status--error">{saveError}</p>

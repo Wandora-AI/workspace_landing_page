@@ -61,7 +61,12 @@ export async function deleteApplication(id) {
   });
 }
 
-export function groupByCategory(applications) {
+export function groupByCategory(applications, categories = []) {
+  const priorityMap = Object.fromEntries(
+    categories.map((category) => [category.name, category.priority])
+  );
+  const defaultPriority = 9999;
+
   const groups = {};
   for (const app of applications) {
     const category = app.category || "Other";
@@ -70,5 +75,13 @@ export function groupByCategory(applications) {
     }
     groups[category].push(app);
   }
-  return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b));
+
+  return Object.entries(groups).sort(([a], [b]) => {
+    const priorityA = priorityMap[a] ?? defaultPriority;
+    const priorityB = priorityMap[b] ?? defaultPriority;
+    if (priorityA !== priorityB) {
+      return priorityA - priorityB;
+    }
+    return a.localeCompare(b);
+  });
 }
