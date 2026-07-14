@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   addCategory,
+  deleteCategory,
   getCategories,
   mergeCategoriesFromApplications,
+  updateCategoryPriority,
 } from "../services/categoryService";
 
 export function useCategories(applications = []) {
@@ -28,8 +30,8 @@ export function useCategories(applications = []) {
   }, [load]);
 
   const add = useCallback(
-    async (name) => {
-      const created = await addCategory(name);
+    async (name, priority) => {
+      const created = await addCategory(name, priority);
       setCategories((prev) =>
         mergeCategoriesFromApplications([...prev, created], applications)
       );
@@ -38,11 +40,48 @@ export function useCategories(applications = []) {
     [applications]
   );
 
+  const updatePriority = useCallback(
+    async (name, priority) => {
+      const updated = await updateCategoryPriority(name, priority);
+      setCategories((prev) =>
+        sortMergedCategories(
+          prev.map((category) =>
+            category.name.toLowerCase() === updated.name.toLowerCase()
+              ? updated
+              : category
+          ),
+          applications
+        )
+      );
+      return updated;
+    },
+    [applications]
+  );
+
+  const remove = useCallback(
+    async (name) => {
+      await deleteCategory(name);
+      setCategories((prev) =>
+        prev.filter(
+          (category) =>
+            category.name.toLowerCase() !== name.trim().toLowerCase()
+        )
+      );
+    },
+    []
+  );
+
   return {
     categories,
     loading,
     error,
     reload: load,
     add,
+    updatePriority,
+    remove,
   };
+}
+
+function sortMergedCategories(categories, applications) {
+  return mergeCategoriesFromApplications(categories, applications);
 }

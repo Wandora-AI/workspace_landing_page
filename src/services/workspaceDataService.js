@@ -3,10 +3,17 @@ import { getConfigAuthPassword } from "../config/auth";
 const API_URL = "/api/data";
 
 export async function getWorkspaceData() {
-  const response = await fetch(API_URL);
+  let response;
+  try {
+    response = await fetch(API_URL);
+  } catch {
+    throw new Error(
+      "Failed to load workspace data. Run npm run dev:full in a second terminal (API on :8788). If using :5173, keep both dev servers running."
+    );
+  }
 
   if (!response.ok) {
-    throw new Error("Failed to load workspace data");
+    throw new Error(`Failed to load workspace data (${response.status})`);
   }
 
   return response.json();

@@ -21,11 +21,13 @@ export default function ApplicationForm({
   const [errors, setErrors] = useState({});
 
   const categoryOptions = useMemo(() => {
-    const options = new Set(categories);
+    const options = categories.map((category) =>
+      typeof category === "string" ? category : category.name
+    );
     if (initialValues?.category?.trim()) {
-      options.add(initialValues.category.trim());
+      options.push(initialValues.category.trim());
     }
-    return [...options].sort((a, b) => a.localeCompare(b));
+    return [...new Set(options)];
   }, [categories, initialValues]);
 
   useEffect(() => {

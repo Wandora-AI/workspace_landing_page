@@ -1,5 +1,5 @@
 [
-  "Almosafer",
-  "HK Souq",
-  "Operations"
+  { "name": "HK Souq", "priority": 1 },
+  { "name": "Almosafer", "priority": 2 },
+  { "name": "Operations", "priority": 3 }
 ]
