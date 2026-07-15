@@ -1,0 +1,28 @@
+.app-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.app-logo img {
+  width: 62%;
+  height: 62%;
+  object-fit: contain;
+}
+
+/* Command Hub — dark chip */
+[data-variant="hub"] .app-logo {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Bento — tinted chip, tint color injected per category via --tile-tint */
+[data-variant="bento"] .app-logo {
+  background: color-mix(in srgb, var(--tile-tint, #ef5b2b) 10%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--tile-tint, #ef5b2b) 22%, #ffffff);
+  border-radius: 12px;
+}
+
