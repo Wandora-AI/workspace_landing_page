@@ -42,15 +42,13 @@
 }
 
 /* ---- Skins ---- */
-[data-variant="hub"] .variant-switcher,
-[data-variant="classic"] .variant-switcher {
+[data-variant="hub"] .variant-switcher {
   background: rgba(24, 24, 27, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #ecedee;
 }
 
-[data-variant="hub"] .variant-switcher__option--active,
-[data-variant="classic"] .variant-switcher__option--active {
+[data-variant="hub"] .variant-switcher__option--active {
   background: #ef3b23;
   color: #ffffff;
 }

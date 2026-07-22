@@ -65,7 +65,11 @@ export default function BentoView({ groupedCategories }) {
         </div>
       </header>
 
-      {visibleGroups.length === 0 ? (
+      {groupedCategories.length === 0 ? (
+        <div className="bento__empty">
+          <p className="bento__empty-title">No applications configured yet.</p>
+        </div>
+      ) : visibleGroups.length === 0 ? (
         <div className="bento__empty">
           <p className="bento__empty-title">Nothing matches “{query.trim()}”</p>
           <button

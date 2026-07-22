@@ -33,11 +33,15 @@ find-and-launch UX is the primary success metric.
 ### `src/`
 
 - `App.jsx` / `routes/LandingPageRoutes.jsx` — router; everything lives under `/landing_page`, config at `/landing_page/config`
-- `pages/LandingPage/` — the main directory page (what the business team judges)
+- `pages/LandingPage/` — the main directory page (what the business team judges);
+  `LandingPage.jsx` picks the style, `HubView.jsx` (default) and `BentoView.jsx` render it
 - `pages/ConfigPage/` — admin CRUD for applications/categories (behind config password)
-- `components/PasswordGate/` — localStorage-backed password gates
+- `variants/VariantContext.jsx` — the two selectable styles (`hub` = Command Hub, default;
+  `bento` = Bento), persisted in `localStorage` and shareable via `?variant=`
+- `components/VariantSwitcher/` — floating Style toggle, landing page only
+- `components/SearchBar/`, `components/AppLogo/`, `utils/appMeta.js` — shared by both styles
+- `components/PasswordGate/` — sessionStorage-backed password gates
 - `components/Layout/` — header (logo + Workspace/Settings nav) + `<Outlet/>`
-- `components/AppCard/`, `components/CategorySection/` — classic card grid
 - `hooks/useApplications.js`, `hooks/useCategories.js` — load/CRUD state over the API
 - `services/workspaceDataService.js` — `GET/PUT /api/data`; PUT sends `X-Config-Password`
 - `services/applicationService.js` — CRUD + `groupByCategory` (sorts by category priority)
@@ -56,6 +60,12 @@ find-and-launch UX is the primary success metric.
   seed JSON.
 - `PUT /api/data` replaces the entire blob — a bad save wipes all apps. UAT KV is
   separate, so test destructive config changes on UAT first.
+- Two UI styles only: Command Hub (default) and Bento. The old "classic" card grid
+  was retired on 2026-07-23 — `AppCard`/`CategorySection` are gone. Any stored or
+  URL `variant=classic` falls through to Command Hub via the `VALID_IDS` check in
+  `VariantContext.jsx`, so no migration code is needed.
+- The Settings page deliberately sets `data-variant="plain"`, which no CSS selects —
+  that is what keeps admin chrome on base `Layout.css` regardless of the chosen style.
 
 ## Absolute rules
 
@@ -90,4 +100,4 @@ config page (add/edit/delete an app). Use gstack `/browse` for screenshots.
 
 ---
 
-Last updated: 2026-07-15 — owner: max
+Last updated: 2026-07-23 — owner: max
