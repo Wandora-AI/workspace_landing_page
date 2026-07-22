@@ -98,7 +98,11 @@ export default function HubView({ groupedCategories }) {
           />
         </div>
 
-        {visibleGroups.length === 0 ? (
+        {groupedCategories.length === 0 ? (
+          <div className="hub__empty">
+            <p className="hub__empty-title">No applications configured yet.</p>
+          </div>
+        ) : visibleGroups.length === 0 ? (
           <div className="hub__empty">
             <p className="hub__empty-title">No matches for “{query.trim()}”</p>
             <button

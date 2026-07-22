@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const VARIANTS = [
-  { id: "classic", label: "Classic" },
   { id: "hub", label: "Command Hub" },
   { id: "bento", label: "Bento" },
 ];

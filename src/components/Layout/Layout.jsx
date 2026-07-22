@@ -7,9 +7,9 @@ export default function Layout() {
   const { variant } = useVariant();
   const { pathname } = useLocation();
   // Variant chrome only applies to the workspace home; Settings keeps
-  // the classic layout so admin flows stay stable across variants.
+  // the plain default chrome so admin flows stay stable across styles.
   const isWorkspaceHome = pathname.replace(/\/$/, "") === "/landing_page";
-  const activeVariant = isWorkspaceHome ? variant : "classic";
+  const activeVariant = isWorkspaceHome ? variant : "plain";
 
   return (
     <div className="layout" data-variant={activeVariant}>
