@@ -1,10 +1,18 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import wandoraLogo from "../../../assets/wandora-logo-cropped-preview.png";
+import { useVariant } from "../../variants/VariantContext";
 import "./Layout.css";
 
 export default function Layout() {
+  const { variant } = useVariant();
+  const { pathname } = useLocation();
+  // Variant chrome only applies to the workspace home; Settings keeps
+  // the plain default chrome so admin flows stay stable across styles.
+  const isWorkspaceHome = pathname.replace(/\/$/, "") === "/landing_page";
+  const activeVariant = isWorkspaceHome ? variant : "plain";
+
   return (
-    <div className="layout">
+    <div className="layout" data-variant={activeVariant}>
       <header className="layout__header">
         <div className="layout__brand">
           <Link to="/landing_page" className="layout__logo-link">
