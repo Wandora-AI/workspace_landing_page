@@ -10,3 +10,4 @@ dist
 # Wrangler local state
 .wrangler
 .dev.vars
+.gstack/
